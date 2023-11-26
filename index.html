@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bat Ball Stump Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+  <div class="container text-center border mt-5 bg-color">
+    <div class="row mt-5">
+      <div class="col-sm-12">
+    <h1 class="border">Bat Ball Stump Game</h1>
+
+    
+
+    <!-- Bat Button -->
+    <button class="choice-button" onclick="
+    let computerChoice=generateComputerChoice();
+    let getResultMsg=getResult('Bat', computerChoice);
+    showResult('Bat', computerChoice, getResultMsg);
+    "><img src="./images/bat.png" alt="Bat Image" class="choice-image"></button>
+  <!-- Ball Button -->
+    <button class="choice-button" onclick="
+    computerChoice=generateComputerChoice();
+    getResultMsg=getResult('Ball', computerChoice);
+    showResult('Ball', computerChoice, getResultMsg);
+    "><img src="./images/ball.png" alt="Ball Image" class="choice-image"></button>
+    <!-- Stump Button -->
+    <button class="choice-button" onclick="
+    computerChoice=generateComputerChoice();
+    getResultMsg=getResult('Stump', computerChoice);
+    showResult('Stump', computerChoice, getResultMsg);
+    "><img src="./images/stump.png" alt="Stump Image" class="choice-image"></button >
+   
+    <h3 id="user-move"></h3>
+    <h3 id="computer-move"></h3>
+    <h3 id="result"></h3>
+    <h3 id="score"></h3>
+
+    <button class="reset-button" onclick="localStorage.clear()
+    resetScore();
+      ">Reset</button>    
+    
+</div>
+  </div>
+  </div>
+  <script>
+
+    // Score Object 
+    let scoreStr=localStorage.getItem('score');
+    let score;
+   resetScore(scoreStr);
+   function resetScore(scoreStr){
+    score= scoreStr?JSON.parse(scoreStr):{
+  youWin:0,
+  youLose:0,
+  draw:0,
+};
+score.displayScore= function(){
+    return `Won: ${score.youWin}, Lose: ${score.youLose}, Draw: ${score.draw}.`;
+  };
+  showResult();
+   }
+
+// Computer Choice Function
+function generateComputerChoice(){
+  let random = Math.random()*3;
+  if(random>0&&random<1){
+    return "Bat";
+  } else if(random>1&& random<2){
+    return "Ball";
+  } else{
+    return "Stump";
+  }
+}
+
+// Get Result Function 
+function getResult(userMove, computerMove){
+if(userMove==="Bat"){
+if(computerMove==="Bat"){
+  score.draw++;
+  return "Draw";
+}else if(computerMove==="Ball"){
+  score.youWin++;
+  return "You Win";
+}else{
+  score.youLose++;
+  return "You Lose";
+}
+} else if(userMove==="Ball"){
+  if(computerMove==="Bat"){
+    score.youLose++;
+    return "You Lose";
+}else if(computerMove==="Ball"){
+  score.draw++;
+  return "Draw";
+}else{
+  score.youWin++;
+  return "You Win";
+}
+} else{
+  if(computerMove==="Bat"){
+    score.youWin++;
+    return "You Win";
+}else if(computerMove==="Ball"){
+  score.youLose++;
+  return "You Lose";
+}else{
+  score.draw++;
+  return "Draw";
+  
+}
+}
+}
+
+// Show Result Function
+function showResult(userMove, computerMove, result){
+  localStorage.setItem('score',JSON.stringify(score));
+
+document.querySelector('#user-move').innerHTML=userMove? `Your Choice is ${userMove}`:'';
+document.querySelector('#computer-move').innerHTML=computerMove?`Your Choice is ${computerMove}`:'';
+document.querySelector('#result').innerHTML=result||'';
+document.querySelector('#score').innerHTML=score.displayScore();
+}
+
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>

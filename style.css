@@ -1,0 +1,38 @@
+body{
+  background-color: #f9f987a8;
+  font-family: Arial;  
+}
+.bg-color{
+background-color: rgb(248, 192, 136);
+}
+h1{
+background-color: rgb(238, 238, 238);
+margin: 5px;
+border: none;
+}
+
+.choice-button{
+  height: 100px;
+  width: 100px;
+  border: none;
+  margin: 10px;
+  background-color: rgb(162, 225, 68);
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.choice-image{
+  height: 75px;
+}
+
+.reset-button{
+  background-color: blue;
+  color: white;
+  margin: 5px;
+  padding: 5px;
+}
+
+.reset-button:hover{
+  background-color: white;
+  color: blue;
+}
